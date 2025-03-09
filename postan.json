@@ -1,0 +1,292 @@
+{
+  "info": {
+    "_postman_id": "f0e2a1c5-9f0a-4b6d-83be-b5f64e31b5b9",
+    "name": "API Tests",
+    "description": "Tests de l'API pour les missions et les candidatures",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Créer un utilisateur",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Benoit\", \"email\": \"benoit@example.com\", \"password\": \"password123\", \"role\": \"admin\"}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/users",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "users"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 201
+        }
+      ]
+    },
+    {
+      "name": "Créer une organisation",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Association Test\", \"description\": \"Une association de test\"}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/organizations",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "organizations"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 201
+        }
+      ]
+    },
+    {
+      "name": "Associer un utilisateur à une organisation",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"organizationId\": \"{{organizationId}}\", \"userId\": \"{{userId}}\"}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/users/organizations",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "users", "organizations"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 201
+        }
+      ]
+    },
+    {
+      "name": "Créer une mission",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\": \"Mission Test\", \"description\": \"A mission for testing\", \"date\": \"2025-03-07\", \"organizationId\": \"{{organizationId}}\"}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/missions",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "missions"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 201
+        }
+      ]
+    },
+    {
+      "name": "Obtenir la liste des missions",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "auth_token={{authToken}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/missions",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "missions"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200
+        }
+      ]
+    },
+    {
+      "name": "Obtenir une mission par ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "auth_token={{authToken}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/missions/{{missionId}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "missions", "{{missionId}}"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200
+        }
+      ]
+    },
+    {
+      "name": "Postuler à une mission",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Cookie",
+            "value": "auth_token={{authToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"missionId\": \"{{missionId}}\", \"userId\": \"{{userId}}\"}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/applications",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "applications"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 201
+        }
+      ]
+    },
+    {
+      "name": "Obtenir la liste des candidatures",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "auth_token={{authToken}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/applications",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "applications"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200
+        }
+      ]
+    },
+    {
+      "name": "Obtenir une candidature par ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "auth_token={{authToken}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/applications/{{applicationId}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "applications", "{{applicationId}}"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200
+        }
+      ]
+    },
+    {
+      "name": "Modifier une candidature (PATCH)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Cookie",
+            "value": "auth_token={{authToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"status\": \"accepted\"}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/applications/{{applicationId}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "applications", "{{applicationId}}"]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200
+        }
+      ]
+    }
+  ]
+}

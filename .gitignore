@@ -1,0 +1,43 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+pnpm-lock.yaml
+package-lock.json
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# Dossier de builds
+/dist
+/build
+
+# Environnement local
+.env
+.env.local
+.env.*.local
+
+# Dépendances spécifiques au système d'exploitation
+.DS_Store
+Thumbs.db
+
+# IDEs et éditeurs de texte
+.vscode/
+.idea/
+
+# Compiled files (binaries)
+*.out
+*.bin
+
+# Caches
+.cache/
+npm/
+
+# Dossiers spécifiques à Vue.js
+/dist/
+*.map
+
+# Fichiers de
