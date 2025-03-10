@@ -1,4 +1,4 @@
--- Table des utilisateurs (informations générales)
+
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -6,7 +6,6 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL
 );
 
--- Table des associations
 CREATE TABLE organizations (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -23,7 +22,7 @@ CREATE TABLE users_organizations (
     FOREIGN KEY (organization_id) REFERENCES organizations(id)
 );
 
--- Table des missions proposées par les associations
+
 CREATE TABLE missions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(100) NOT NULL,
@@ -33,7 +32,7 @@ CREATE TABLE missions (
     FOREIGN KEY (organization_id) REFERENCES organizations(id)
 );
 
--- Table des candidatures aux missions
+
 CREATE TABLE applications (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
