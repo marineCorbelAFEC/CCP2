@@ -1,0 +1,1040 @@
+{
+	"info": {
+		"_postman_id": "52a8a158-4181-4474-83cf-f6403abc3583",
+		"name": "API Tests",
+		"description": "Tests de l'API pour les missions et les candidatures",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40777078"
+	},
+	"item": [
+		{
+			"name": "Créer un utilisateur Asso",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"    pm.environment.set(\"idUser\", pm.response.json().id);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Benoit\", \"email\": \"benoit@example.com\", \"password\": \"password123\"}"
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Untitled Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"Benoit\", \"email\": \"benoit@example.com\", \"password\": \"password123\"}"
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 201,
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Créer une organisation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Save organization id in a variable if the response is ok\", function () {\r",
+							"    if (pm.response.code === 201) {\r",
+							"        const responseData = pm.response.json();\r",
+							"        pm.collectionVariables.set(\"organizationId\", responseData.id);\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Association Test\",\r\n  \"description\": \"Une description de l'association\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/organizations/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"organizations",
+						"create"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Untitled Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Association Test\",\r\n  \"description\": \"Une description de l'association\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/organizations/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"organizations",
+								"create"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 201,
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Se connecter ( Asso)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"benoit@example.com\",\r\n    \"password\": \"password123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Associer un utilisateur à une organisation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Save organization id in a variable if the response is ok\", function () {\r",
+							"    if (pm.response.code === 200) {\r",
+							"        const responseData = pm.response.json();\r",
+							"        pm.collectionVariables.set(\"organizationId\", responseData.organizationId);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"organizationId\": \"{{organizationId}}\", \"userId\": \"{{userId}}\"}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/organizations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"organizations"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Untitled Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"organizationId\": \"{{organizationId}}\", \"userId\": \"{{userId}}\"}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/organizations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"organizations"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 201,
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Créer une mission",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.get(\"organizationId\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Save organization id in a variable if the response is ok\", function () {\r",
+							"    if (pm.response.code === 201) {\r",
+							"        const responseData = pm.response.json();\r",
+							"        pm.collectionVariables.set(\"missionId\", responseData.id);\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Mission Test\",\r\n    \"description\": \"A mission for testing\",\r\n    \"date\": \"2025-03-07\",\r\n    \"organizationId\": {{organizationId}}\r\n\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/missions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"missions"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Untitled Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Mission Test\",\r\n    \"description\": \"A mission for testing\",\r\n    \"date\": \"2025-03-07\",\r\n    \"organizationId\": {{organizationId}}\r\n\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/missions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"missions"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 201,
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Obtenir la liste des missions",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "auth_token={{authToken}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3001/api/missions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"missions"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Untitled Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "auth_token={{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/api/missions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"missions"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Obtenir une mission par ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "auth_token={{authToken}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3001/api/missions/{{missionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"missions",
+						"{{missionId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Untitled Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "auth_token={{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/api/missions/{{missionId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"missions",
+								"{{missionId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Obtenir une mission par ID (no mission)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "auth_token={{authToken}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3001/api/missions/150",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"missions",
+						"150"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Untitled Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "auth_token={{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/api/missions/150",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"missions",
+								"150"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "obtenir liste de misssions",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "auth_token={{authToken}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3001/api/missions/150",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"missions",
+						"150"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Untitled Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "auth_token={{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/api/missions/150",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"missions",
+								"150"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Créer un utilisateur bénévole",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"    pm.environment.set(\"idUserVolonteer\", pm.response.json().id);\r",
+							"     pm.environment.set(\"emailVolonteer\", pm.response.json().email);\r",
+							"    ;\r",
+							"\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Bernad\", \"email\": \"bernard@example.com\", \"password\": \"{{password}}\"}"
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Untitled Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"Bernad\", \"email\": \"bernard@example.com\", \"password\": \"{{password}}\"}"
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 201,
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Se connecter bénévole",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.environment.set(\"idUserVolunteer\", pm.response.json().id);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{emailVolonteer}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Postuler à une mission",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Save organization id in a variable if the response is ok\", function () {\r",
+							"    if (pm.response.code === 201) {\r",
+							"        const responseData = pm.response.json();\r",
+							"        pm.collectionVariables.set(\"applicationId\", responseData.id);\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "auth_token={{authToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"missionId\": {{missionId}}, \"userId\": {{idUserVolunteer}} }"
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/applications",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"applications"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Untitled Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Cookie",
+								"value": "auth_token={{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"missionId\": {{missionId}}, \"userId\": {{idUserVolunteer}} }"
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/applications",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"applications"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 201,
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Obtenir la liste des candidatures",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "auth_token={{authToken}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3001/api/missions/{{missionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"missions",
+						"{{missionId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Untitled Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "auth_token={{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/api/missions/{{missionId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"missions",
+								"{{missionId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Obtenir une candidature par ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "auth_token={{authToken}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3001/api/applications/{{applicationId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"applications",
+						"{{applicationId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Untitled Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "auth_token={{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/api/applications/{{applicationId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"applications",
+								"{{applicationId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Modifier une candidature (PATCH)",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "auth_token={{authToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"status\": \"accepted\"}"
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/applications/{{applicationId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"applications",
+						"{{applicationId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Untitled Response",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Cookie",
+								"value": "auth_token={{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"status\": \"accepted\"}"
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/applications/{{applicationId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"applications",
+								"{{applicationId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "organizationId",
+			"value": ""
+		},
+		{
+			"key": "missionId",
+			"value": ""
+		},
+		{
+			"key": "password",
+			"value": "password123",
+			"type": "default"
+		},
+		{
+			"key": "applicationId",
+			"value": ""
+		}
+	]
+}
