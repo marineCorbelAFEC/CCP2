@@ -46,10 +46,10 @@ class AuthController {
     res.status(200).json({ message: 'Déconnecté avec succès' });
   }
 
-  async getUserById() {
+  async getUserById(req, res, next) {
     try {
-      const user = await this.userService.getUserById(req.user.id);
-
+      const user = await this.userService.findById(req.user.id);
+      console.log('user', user);
       res.status(200).json(user);
     } catch (err) {
       next(err);
