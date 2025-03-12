@@ -23,6 +23,7 @@
     "jsonwebtoken": "^9.0.2",
     "mariadb": "^3.4.0",
     "mysql2": "^3.13.0",
+    "pg": "^8.14.0",
     "sanitize-html": "^2.14.0"
   }
 }
