@@ -12,7 +12,8 @@ import organizationRouter from './routes/organizationRouter.js';
 import helmet from 'helmet';
 
 const app = express();
-
+console.info('Démarrage du serveur...');
+console.log(`Port du serveur : ${process.env.SERVER_PORT}`);
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
