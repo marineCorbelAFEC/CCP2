@@ -19,6 +19,7 @@ logs/
 .env
 .env.local
 .env.*.local
+secrets.json
 
 # Dépendances spécifiques au système d'exploitation
 .DS_Store
